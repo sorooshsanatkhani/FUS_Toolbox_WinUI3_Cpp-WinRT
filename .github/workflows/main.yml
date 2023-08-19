@@ -9,17 +9,17 @@ on:
   pull_request:
     branches: [ master ]
 
-env:
-  solution-name: FUSapp.sln
-  msix-project-path: FUSapp/FUSapp.wapproj
-  package-name: FUSapp
-  configuration: Release
-  vm-image: windows-latest
-
 jobs:
   build:
-    runs-on: ${{ env.vm-image }}
+    runs-on: windows-latest
 
+    env:
+      solution-name: FUSapp.sln
+      msix-project-path: FUSapp/FUSapp.wapproj
+      package-name: FUSapp
+      configuration: Release
+      vm-image: windows-latest
+  
     steps:
     - name: Checkout
       uses: actions/checkout@v2

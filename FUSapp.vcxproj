@@ -215,6 +215,7 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="FUSapp_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>

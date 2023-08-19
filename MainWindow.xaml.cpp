@@ -19,7 +19,7 @@ namespace winrt::FUSapp::implementation
     MainWindow::MainWindow()
     {
         InitializeComponent();
-        Title(L"Focused Ultrasound Setup");
+        Title(L"Focused Ultrasound Setup"); // Set the title bar
         Frequency().Value(500000);
         Amplitude().Value(160);
         PulseDuration().Value(10);

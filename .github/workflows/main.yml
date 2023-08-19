@@ -35,9 +35,10 @@ jobs:
       uses: actions/setup-dotnet@v3.2.0
       with:
         dotnet-version: 6.0
-
-    #- name: Restore NuGet packages
-    #  run: nuget restore YourSolution.sln
+    
+    # Restore NuGet Packages
+    - name: Restore NuGet packages
+      run: nuget restore YourSolution.sln
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe

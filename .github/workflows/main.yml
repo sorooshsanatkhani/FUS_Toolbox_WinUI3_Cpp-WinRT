@@ -38,7 +38,7 @@ jobs:
     
     # Restore NuGet Packages
     - name: Restore NuGet packages
-      run: nuget restore YourSolution.sln
+      run: nuget restore FUSapp.sln
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe

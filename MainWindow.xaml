@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="FUSapp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FUSapp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Width="Auto" Height="Auto" 
+          ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto" 
+          RowDefinitions   ="80, 60, 20, 60, 20, 60, 20, 60, 20, 60, 20, 60, 20, 100" 
+          Margin="20">
+        <Button x:Name="CheckDevice" Click="CheckDevice_Click" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">Check Device</Button>
+        <NumberBox x:Name="Frequency" Header="Frequency (Hz)" PlaceholderText="500000" ValueChanged="NumberBox_ValueChanged" Grid.Column="0" Grid.Row="1" />
+        <TextBlock x:Name="warningTextBlock1" Foreground="Red" Grid.Column="0" Grid.Row="2"/>
+        <NumberBox x:Name="Amplitude" Header="Amplitude (mVpp)" PlaceholderText="160" ValueChanged="NumberBox_ValueChanged" Grid.Column="0" Grid.Row="3" />
+        <TextBlock x:Name="warningTextBlock2" Foreground="Red" Grid.Column="0" Grid.Row="4"/>
+        <NumberBox x:Name="PulseDuration" Header="Pulse Duration (ms)" PlaceholderText="10" ValueChanged="PulseDuration_ValueChanged" Grid.Column="0" Grid.Row="5" />
+        <TextBlock x:Name="warningTextBlock3" Foreground="Red" Grid.Column="0" Grid.Row="6"/>
+        <NumberBox x:Name="DutyCycle" Header="Duty Cycle (%)" PlaceholderText="2" ValueChanged="DutyCycle_ValueChanged" Grid.Column="0" Grid.Row="7" />
+        <TextBlock x:Name="warningTextBlock4" Foreground="Red" Grid.Column="0" Grid.Row="8"/>
+        <NumberBox x:Name="PRF" Header="PRF (Hz)" PlaceholderText="2" ValueChanged="PRF_ValueChanged" Grid.Column="0" Grid.Row="9" />
+        <TextBlock x:Name="warningTextBlock5" Foreground="Red" Grid.Column="0" Grid.Row="10"/>
+        <NumberBox x:Name="Lenght" Header="Lenght (s)" PlaceholderText="Time of sonication" ValueChanged="NumberBox_ValueChanged" Grid.Column="0" Grid.Row="11" />
+        <TextBlock x:Name="warningTextBlock6" Foreground="Red" Grid.Column="0" Grid.Row="12"/>
+        <Button x:Name="GenerateWaveform" Click="GenerateWaveform_Click" Grid.Column="0" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center">Generate Waveform</Button>
+    </Grid>
+    
+</Window>

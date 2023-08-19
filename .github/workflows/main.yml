@@ -35,10 +35,6 @@ jobs:
       uses: actions/setup-dotnet@v3.2.0
       with:
         dotnet-version: 6.0
-    
-    # Restore NuGet Packages
-    - name: Restore NuGet packages
-      run: nuget restore FUSapp.sln
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
@@ -57,6 +53,10 @@ jobs:
         $certificatePath = "GitHubActionsWorkflow.pfx"
         [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
 
+# Restore NuGet Packages
+    - name: Restore NuGet packages
+      run: nuget restore FUSapp.sln -verbosity detailed
+      
     # Create the app package by building and packaging the project
     - name: Create the app package
       run: msbuild $env:FUSapp /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:AppxPackageDir="$env:Appx_Package_Dir" /p:GenerateAppxPackageOnBuild=true

@@ -3,6 +3,7 @@
 name: WinUI 3 MSIX app
 
 on:
+  workflow_dispatch:  # This allows the workflow to be triggered manually
   push:
     branches: [ master ]
   pull_request:

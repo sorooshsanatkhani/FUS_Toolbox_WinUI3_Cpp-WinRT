@@ -16,6 +16,7 @@
     <ClCompile Include="Burst.cpp" />
     <ClCompile Include="GetDeviceStatus.cpp" />
     <ClCompile Include="removeEnd.cpp" />
+    <ClCompile Include="Stop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -192,8 +193,12 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="FUSapp_TemporaryKey.pfx" />
+    <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="visa64.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="$(MSBuildThisFileDirectory)..\..\natvis\wil.natvis" />
   </ItemGroup>
 </Project>

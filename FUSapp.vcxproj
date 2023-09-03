@@ -142,6 +142,7 @@
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="removeEnd.cpp" />
+    <ClCompile Include="Stop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl">

@@ -26,6 +26,7 @@
         <NumberBox x:Name="Lenght" Header="Lenght (s)" PlaceholderText="Time of sonication" ValueChanged="NumberBox_ValueChanged" Grid.Column="0" Grid.Row="11" />
         <TextBlock x:Name="warningTextBlock6" Foreground="Red" Grid.Column="0" Grid.Row="12"/>
         <Button x:Name="GenerateWaveform" Click="GenerateWaveform_Click" Grid.Column="0" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center">Generate Waveform</Button>
+        <Button x:Name="Abort" Click="Abort_Click" Grid.Column="1" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center">Abort!</Button>
     </Grid>
     
 </Window>

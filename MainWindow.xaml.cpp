@@ -89,6 +89,7 @@ namespace winrt::FUSapp::implementation
         PRF().Value(round(PRF().Value() * 10.) / 10.);
         PulseDuration().Value(round(((DutyCycle().Value() / 100.) / PRF().Value()) * 1000. * 10.) / 10.);
     }
+
     void MainWindow::GenerateWaveform_Click(IInspectable const&, RoutedEventArgs const&)
     {
 
@@ -171,5 +172,11 @@ namespace winrt::FUSapp::implementation
             // Show the ContentDialog
             dialog.ShowAsync();
         }
+    }
+
+    void MainWindow::Abort_Click(IInspectable const&, RoutedEventArgs const&)
+    {
+        FUS::WaveformGenerator FuncGen2;
+        FuncGen2.Stop();
     }
 }

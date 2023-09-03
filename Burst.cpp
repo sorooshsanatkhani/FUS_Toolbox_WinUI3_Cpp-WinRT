@@ -1,3 +1,8 @@
+// Author: Soroosh Sanatkhani
+// Columbia University
+// Created: 1 August, 2023
+// Last Modified : 3 September, 2023
+
 #include "pch.h"
 #include "FUS.h"
 #include <visa.h>

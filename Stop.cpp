@@ -5,35 +5,23 @@
 
 #include "pch.h"
 #include "FUS.h"
-#include <visa.h>
-#pragma comment(lib,"visa64.lib")
 #include <stdio.h>
 #include <tchar.h>
 #include <windows.h>
 
 namespace FUS
 {
-	void WaveformGenerator::Stop()
+	void WaveformGenerator::Stop(ViSession defaultRM, ViSession instr, ViStatus status)
 	{
-		ViSession defaultRM;
-		ViSession instr;
-		ViUInt32 numInstrs;
-		ViFindList findList;
-		ViStatus status;
-		char instrResourceString[VI_FIND_BUFLEN];
-		unsigned char buffer[100];
-		status = viOpenDefaultRM(&defaultRM);
-		status = viOpen(defaultRM, instrResourceString, VI_NULL, VI_NULL, &instr);
-		status = viPrintf(instr, "OUTP:STAT OFF\n");
+		status = viPrintf(instr, "C1:OUTP OFF\n");
+		status = viClose(instr);
+		status = viClose(defaultRM);
+
 		if (status < VI_SUCCESS)
 		{
 			// Error handling
-			viClose(instr);
-			viClose(defaultRM);
+			status = viClose(instr);
+			status = viClose(defaultRM);
 		}
-
-		// Close the session
-		viClose(instr);
-		viClose(defaultRM);
 	}
 }

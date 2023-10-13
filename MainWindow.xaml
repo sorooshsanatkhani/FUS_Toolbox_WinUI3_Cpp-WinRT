@@ -9,8 +9,8 @@
     mc:Ignorable="d">
 
     <Grid Width="Auto" Height="Auto" 
-          ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto" 
-          RowDefinitions   ="80, 60, 20, 60, 20, 60, 20, 60, 20, 60, 20, 60, 20, 100" 
+          ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto" 
+          RowDefinitions   ="80, 60, 20, 60, 20, 60, 20, 60, 20, 60, 20, 60, 20, 100, 100" 
           Margin="20">
         <Button x:Name="CheckDevice" Click="CheckDevice_Click" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">Check Device</Button>
         <NumberBox x:Name="Frequency" Header="Frequency (Hz)" PlaceholderText="500000" ValueChanged="NumberBox_ValueChanged" Grid.Column="0" Grid.Row="1" />
@@ -27,6 +27,7 @@
         <TextBlock x:Name="warningTextBlock6" Foreground="Red" Grid.Column="0" Grid.Row="12"/>
         <Button x:Name="GenerateWaveform" Click="GenerateWaveform_Click" Grid.Column="0" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center">Generate Waveform</Button>
         <Button x:Name="Abort" Click="Abort_Click" Grid.Column="1" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center">Abort!</Button>
+        <ProgressRing x:Name="SonicationProgress" IsIndeterminate="False" Width="60" Height="60" Background="LightGray" Grid.Column="0" Grid.Row="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
     
 </Window>

@@ -17,6 +17,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B849857E-D95D-4DAC-85D3-B2B2571DD805}.Debug|ARM64.ActiveCfg = Debug|ARM64
 		{B849857E-D95D-4DAC-85D3-B2B2571DD805}.Debug|x64.ActiveCfg = Release|x64
+		{B849857E-D95D-4DAC-85D3-B2B2571DD805}.Debug|x64.Build.0 = Release|x64
+		{B849857E-D95D-4DAC-85D3-B2B2571DD805}.Debug|x64.Deploy.0 = Release|x64
 		{B849857E-D95D-4DAC-85D3-B2B2571DD805}.Debug|x86.ActiveCfg = Debug|x64
 		{B849857E-D95D-4DAC-85D3-B2B2571DD805}.Release|ARM64.ActiveCfg = Release|ARM64
 		{B849857E-D95D-4DAC-85D3-B2B2571DD805}.Release|x64.ActiveCfg = Release|x64

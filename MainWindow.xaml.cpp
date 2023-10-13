@@ -7,9 +7,24 @@
 #include "MainWindow.g.cpp"
 #endif
 
+#include <winrt/Windows.UI.Core.h>
+#include <windows.applicationmodel.core.h>
+
+
 using namespace winrt;
 using namespace Microsoft::UI::Xaml;
 using namespace Microsoft::UI::Xaml::Controls;
+using namespace Windows::Foundation;
+using namespace Windows::System::Threading;
+using namespace Windows::UI::Core;
+using namespace Windows::ApplicationModel::Core;
+
+
+FUS::WaveformGenerator FuncGen;
+FUS::DeviceOutput FuncGenOutput;
+
+ThreadPoolTimer timer{ nullptr };
+
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -39,6 +54,7 @@ namespace winrt::FUSapp::implementation
 
     void MainWindow::CheckDevice_Click(IInspectable const&, RoutedEventArgs const&)
     {
+        OutputDebugString(L"Hello, World!\n");
         FUS::WaveformGenerator FuncGen;
         std::pair<std::wstring, int> devicestatus = FuncGen.GetDeviceStatus();
 
@@ -90,9 +106,10 @@ namespace winrt::FUSapp::implementation
         PulseDuration().Value(round(((DutyCycle().Value() / 100.) / PRF().Value()) * 1000. * 10.) / 10.);
     }
 
+    auto startTime = clock::now();
+    int SonicationDuration = 0;
     void MainWindow::GenerateWaveform_Click(IInspectable const&, RoutedEventArgs const&)
     {
-
         bool allTextBoxesFilled = true;
         if (Frequency().Text().empty())
         {
@@ -146,37 +163,62 @@ namespace winrt::FUSapp::implementation
 
         if (allTextBoxesFilled)
         {
-            FUS::WaveformGenerator FuncGen;
-
-            std::pair<std::wstring, bool> burst_result = FuncGen.Burst(
+            FuncGenOutput = FuncGen.Burst_ON(
                 Frequency().Value(),
                 Amplitude().Value(),
                 PulseDuration().Value(),
                 DutyCycle().Value(),
                 Lenght().Value());
+            SonicationDuration = Lenght().Value();
+            TimeSpan delay = std::chrono::duration_cast<TimeSpan>(std::chrono::seconds(static_cast<int64_t>(Lenght().Value())));
+            timer = ThreadPoolTimer::CreateTimer(
+                { get_weak(), &MainWindow::OnTick },
+                delay);
 
-            // Create a ContentDialog
-            ContentDialog dialog;
-            if (burst_result.second)
-                dialog.Title(box_value(L"Waveform Generated Successfully!"));
-            else
-            {
-                dialog.Title(box_value(L"Error!"));
-                dialog.Content(box_value(burst_result.first));
-            }
-            dialog.CloseButtonText(L"Okay");
+            startTime = clock::now();
+            TimeSpan period = std::chrono::duration_cast<TimeSpan>(std::chrono::milliseconds(500));
+            periodicTimer = ThreadPoolTimer::CreatePeriodicTimer(
+                { get_weak(), &MainWindow::OnPeriodicTick },
+                period);
 
-            // Set the XamlRoot of the ContentDialog
-            dialog.XamlRoot(GenerateWaveform().XamlRoot());
-
-            // Show the ContentDialog
-            dialog.ShowAsync();
+            //SonicationProgress().IsActive(true);
+            //SonicationProgress().Value(20);
         }
+    }
+
+    void MainWindow::OnTick(ThreadPoolTimer const& timer)
+    {
+        OutputDebugString(L"OnTick function is being called ........\n");
+        periodicTimer.Cancel();
+        FuncGen.Stop(FuncGenOutput.Manager, FuncGenOutput.VISAsession, FuncGenOutput.deviceStatus);
+        //SonicationProgress().IsActive(false);
+    }
+
+    void MainWindow::OnPeriodicTick(ThreadPoolTimer const& timer)
+    {
+        //co_await winrt::resume_background();
+        const std::chrono::duration<double> elapsed_seconds{ clock::now() - startTime };
+        double progress = (elapsed_seconds.count() / SonicationDuration) * 100;
+        progress = static_cast<double>(progress);
+        progress = static_cast<double>(std::round(progress));
+        
+        char message[150];
+        sprintf_s(message, "%s%f%s", "OnPeriodicTick function is being called ........", progress, "\n");
+        OutputDebugStringA(message);
+        //co_await winrt::resume_foreground(this->Dispatcher);
     }
 
     void MainWindow::Abort_Click(IInspectable const&, RoutedEventArgs const&)
     {
-        FUS::WaveformGenerator FuncGen2;
-        FuncGen2.Stop();
+        //co_await winrt::resume_foreground(this->Dispatcher());
+        if (timer)
+        {
+            timer.Cancel();
+            periodicTimer.Cancel();
+            //SonicationProgress().IsActive(false);
+            FuncGen.Stop(FuncGenOutput.Manager, FuncGenOutput.VISAsession, FuncGenOutput.deviceStatus);
+        }
+        SonicationProgress().IsActive(true);
+        SonicationProgress().Value(100);
     }
 }

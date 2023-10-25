@@ -36,7 +36,7 @@ namespace winrt::FUSapp::implementation
         InitializeComponent();
         Title(L"Focused Ultrasound Setup"); // Set the title bar
         Frequency().Value(500000);
-        Amplitude().Value(160);
+        Amplitudepp().Value(100);
         PulseDuration().Value(10);
         DutyCycle().Value(2);
         PRF().Value(2);
@@ -84,7 +84,7 @@ namespace winrt::FUSapp::implementation
     {
         // Round the value to an integer
         Frequency().Value(round(Frequency().Value()));
-        Amplitude().Value(round(Amplitude().Value()));
+        Amplitudepp().Value(round(Amplitudepp().Value()));
         Lenght().Value(round(Lenght().Value()));
     }
     void MainWindow::PulseDuration_ValueChanged(IInspectable const&, NumberBoxValueChangedEventArgs const&)
@@ -121,7 +121,7 @@ namespace winrt::FUSapp::implementation
             warningTextBlock1().Text(L"");
         }
 
-        if (Amplitude().Text().empty())
+        if (Amplitudepp().Text().empty())
         {
             warningTextBlock2().Text(L"Please enter a number");
             allTextBoxesFilled = false;
@@ -165,7 +165,7 @@ namespace winrt::FUSapp::implementation
         {
             FuncGenOutput = FuncGen.Burst_ON(
                 Frequency().Value(),
-                Amplitude().Value(),
+                Amplitudepp().Value(),
                 PulseDuration().Value(),
                 DutyCycle().Value(),
                 Lenght().Value());

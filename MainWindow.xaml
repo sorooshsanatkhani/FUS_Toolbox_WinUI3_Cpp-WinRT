@@ -15,7 +15,7 @@
         <Button x:Name="CheckDevice" Click="CheckDevice_Click" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">Check Device</Button>
         <NumberBox x:Name="Frequency" Header="Frequency (Hz)" PlaceholderText="500000" ValueChanged="NumberBox_ValueChanged" Grid.Column="0" Grid.Row="1" />
         <TextBlock x:Name="warningTextBlock1" Foreground="Red" Grid.Column="0" Grid.Row="2"/>
-        <NumberBox x:Name="Amplitude" Header="Amplitude (mVpp)" PlaceholderText="160" ValueChanged="NumberBox_ValueChanged" Grid.Column="0" Grid.Row="3" />
+        <NumberBox x:Name="Amplitudepp" Header="Amplitude (mVpp)" PlaceholderText="160" ValueChanged="NumberBox_ValueChanged" Grid.Column="0" Grid.Row="3" />
         <TextBlock x:Name="warningTextBlock2" Foreground="Red" Grid.Column="0" Grid.Row="4"/>
         <NumberBox x:Name="PulseDuration" Header="Pulse Duration (ms)" PlaceholderText="10" ValueChanged="PulseDuration_ValueChanged" Grid.Column="0" Grid.Row="5" />
         <TextBlock x:Name="warningTextBlock3" Foreground="Red" Grid.Column="0" Grid.Row="6"/>

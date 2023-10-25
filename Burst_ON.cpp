@@ -11,7 +11,7 @@
 
 namespace FUS
 {
-	DeviceOutput WaveformGenerator::Burst_ON(int Frequency, int Amplitude, double PulseDuration, double DutyCycle, int Lenght)
+	DeviceOutput WaveformGenerator::Burst_ON(int Frequency, int Amplitudepp, double PulseDuration, double DutyCycle, int Lenght)
 	{
 		ViSession defaultRM, instr;
 		ViStatus status;
@@ -110,7 +110,7 @@ namespace FUS
 		}
 
 		//status = viPrintf(instr, "C1:BTWV STATE,ON,PRD,0.5,CARR,WVTP,SINE,CARR,FRQ,500000,CARR,AMP,0.16,GATE_NCYC,NCYC,TIME,5000,TRSR,INT\n");
-		status = viPrintf(instr, "C1:BTWV STATE,ON,PRD,%f,CARR,WVTP,SINE,CARR,FRQ,%d,CARR,AMP,%f,GATE_NCYC,NCYC,TIME,%f,TRSR,INT\n", (PulseDuration/1000.)/(DutyCycle/100.), Frequency, Amplitude / 1000., round(Frequency* (PulseDuration / 1000.)));
+		status = viPrintf(instr, "C1:BTWV STATE,ON,PRD,%f,CARR,WVTP,SINE,CARR,FRQ,%d,CARR,AMP,%f,GATE_NCYC,NCYC,TIME,%f,TRSR,INT\n", (PulseDuration/1000.)/(DutyCycle/100.), Frequency, Amplitudepp / 2000., round(Frequency* (PulseDuration / 1000.)));
 		if (status < VI_SUCCESS)
 		{
 			//printf("Error writing to the device.\n");

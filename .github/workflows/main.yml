@@ -76,9 +76,10 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: MSIX Package and Certificate Files
-        path:
-          - '${{ github.workspace }}\\Packages\\FUSapp*\\*.msix'
-          - '${{ github.workspace }}\\Packages\\FUSapp*\\*.cer'
+        run: mkdir -p ${{ github.workspace }}\\Packages
+        path: |
+          ${{ github.workspace }}\\Packages\\FUSapp*\\*.msix'
+          ${{ github.workspace }}\\Packages\\FUSapp*\\*.cer'
 
   release:
     needs:

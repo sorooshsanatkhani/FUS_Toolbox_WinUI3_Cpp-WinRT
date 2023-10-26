@@ -136,7 +136,7 @@ jobs:
 
         id:
 
-          upload-release-asset
+          upload-release-asset-msix
 
         uses:
 
@@ -172,7 +172,7 @@ jobs:
 
         id:
 
-          upload-release-asset
+          upload-release-asset-cer
 
         uses:
 

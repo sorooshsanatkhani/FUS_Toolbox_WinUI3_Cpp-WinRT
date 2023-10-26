@@ -71,9 +71,132 @@ jobs:
     - name: Remove the pfx
       run: Remove-Item -path GitHubActionsWorkflow.pfx
 
-    # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
-    - name: Upload MSIX package
+    # Upload only .msix and .cer files as artifacts.
+    - name: Upload MSIX package and certificate files
       uses: actions/upload-artifact@v3
       with:
-        name: MSIX Package
-        path: ${{ github.workspace }}\\Packages
+        name: MSIX Package and Certificate Files
+        path:
+          - '${{ github.workspace }}\\Packages\\*.msix'
+          - '${{ github.workspace }}\\Packages\\*.cer'
+
+  release:
+    needs:
+      - build
+
+    runs-on:
+      windows-latest
+
+    steps:
+      - name:
+          Download Artifacts
+
+        uses:
+          actions/download-artifact@v2
+
+        with:
+          name:
+            MSIX Package and Certificate Files
+
+      - name:
+          Create Release
+
+        id:
+          create_release
+
+        uses:
+          actions/create-release@v1
+
+        env:
+          GITHUB_TOKEN:
+
+            ${{ secrets.GITHUB_TOKEN }}
+
+        with:
+          tag_name:
+
+            ${{ github.ref }}
+
+          release_name:
+
+            Release ${{ github.ref }}
+
+          draft:
+
+            false
+
+          prerelease:
+
+            false
+
+      - name:
+
+          Upload Release Asset
+
+        id:
+
+          upload-release-asset
+
+        uses:
+
+          actions/upload-release-asset@v1.0.2
+
+        env:
+
+          GITHUB_TOKEN:
+
+            ${{ secrets.GITHUB_TOKEN }}
+
+        with:
+
+          upload_url:
+
+            ${{ steps.create_release.outputs.upload_url }}
+
+          asset_path:
+
+            './MSIX Package and Certificate Files/*.msix'
+
+          asset_name:
+
+            'MSIX_Package.msix'
+
+          asset_content_type:
+
+            'application/octet-stream'
+
+      - name:
+
+          Upload Release Asset
+
+        id:
+
+          upload-release-asset
+
+        uses:
+
+          actions/upload-release-asset@v1.0.2
+
+        env:
+
+          GITHUB_TOKEN:
+
+            ${{ secrets.GITHUB_TOKEN }}
+
+        with:
+
+          upload_url:
+
+            ${{ steps.create_release.outputs.upload_url }}
+
+          asset_path:
+
+            './MSIX Package and Certificate Files/*.cer'
+
+          asset_name:
+
+            'Certificate.cer'
+
+          asset_content_type:
+
+            'application/x-x509-ca-cert'

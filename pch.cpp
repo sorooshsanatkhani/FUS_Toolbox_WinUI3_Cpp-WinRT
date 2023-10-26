@@ -1,4 +1,6 @@
-// Copyright (c) Microsoft Corporation and Contributors.
-// Licensed under the MIT License.
+// Author: Soroosh Sanatkhani
+// Columbia University
+// Created: 1 August, 2023
+// Last Modified : 26 October, 2023
 
 #include "pch.h"

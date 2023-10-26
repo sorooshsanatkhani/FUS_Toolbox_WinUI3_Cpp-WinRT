@@ -7,15 +7,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
-    <Grid Width="Auto" Height="Auto" 
+    
+    <Viewbox Stretch="Uniform" StretchDirection="Both" Width="250">
+        
+        <Grid Width="Auto" Height="Auto"
           ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto" 
-          RowDefinitions   ="80, 60, 20, 60, 20, 60, 20, 60, 20, 60, 20, 60, 20, 100, 100" 
-          Margin="20">
+          RowDefinitions   ="80, 60, 20, 60, 20, 60, 20, 60, 20, 60, 20, 60, 20, 100, 100">
         <Button x:Name="CheckDevice" Click="CheckDevice_Click" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">Check Device</Button>
         <NumberBox x:Name="Frequency" Header="Frequency (Hz)" PlaceholderText="500000" ValueChanged="NumberBox_ValueChanged" Grid.Column="0" Grid.Row="1" />
         <TextBlock x:Name="warningTextBlock1" Foreground="Red" Grid.Column="0" Grid.Row="2"/>
-        <NumberBox x:Name="Amplitudepp" Header="Amplitude (mVpp)" PlaceholderText="160" ValueChanged="NumberBox_ValueChanged" Grid.Column="0" Grid.Row="3" />
+        <NumberBox x:Name="Amplitudepp" Header="Amplitude (mVpp)" PlaceholderText="100" ValueChanged="NumberBox_ValueChanged" Grid.Column="0" Grid.Row="3" />
         <TextBlock x:Name="warningTextBlock2" Foreground="Red" Grid.Column="0" Grid.Row="4"/>
         <NumberBox x:Name="PulseDuration" Header="Pulse Duration (ms)" PlaceholderText="10" ValueChanged="PulseDuration_ValueChanged" Grid.Column="0" Grid.Row="5" />
         <TextBlock x:Name="warningTextBlock3" Foreground="Red" Grid.Column="0" Grid.Row="6"/>
@@ -27,7 +28,8 @@
         <TextBlock x:Name="warningTextBlock6" Foreground="Red" Grid.Column="0" Grid.Row="12"/>
         <Button x:Name="GenerateWaveform" Click="GenerateWaveform_Click" Grid.Column="0" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center">Generate Waveform</Button>
         <Button x:Name="Abort" Click="Abort_Click" Grid.Column="1" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center">Abort!</Button>
-        <ProgressRing x:Name="SonicationProgress" IsIndeterminate="False" Width="60" Height="60" Background="LightGray" Grid.Column="0" Grid.Row="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    </Grid>
+        </Grid>
+
+    </Viewbox>
     
 </Window>

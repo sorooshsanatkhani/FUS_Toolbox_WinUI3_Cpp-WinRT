@@ -1,5 +1,7 @@
-// Copyright (c) Microsoft Corporation and Contributors.
-// Licensed under the MIT License.
+// Author: Soroosh Sanatkhani
+// Columbia University
+// Created: 1 August, 2023
+// Last Modified : 26 October, 2023
 
 #include "pch.h"
 
@@ -14,13 +16,7 @@ using namespace Microsoft::UI::Xaml::Navigation;
 using namespace FUSapp;
 using namespace FUSapp::implementation;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
-/// <summary>
-/// Initializes the singleton application object.  This is the first line of authored code
-/// executed, and as such is the logical equivalent of main() or WinMain().
-/// </summary>
 App::App()
 {
     InitializeComponent();
@@ -37,10 +33,7 @@ App::App()
 #endif
 }
 
-/// <summary>
-/// Invoked when the application is launched.
-/// </summary>
-/// <param name="e">Details about the launch request and process.</param>
+
 void App::OnLaunched(LaunchActivatedEventArgs const&)
 {
     window = make<MainWindow>();

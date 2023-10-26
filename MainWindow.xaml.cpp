@@ -1,5 +1,7 @@
-// Copyright (c) Microsoft Corporation and Contributors.
-// Licensed under the MIT License.
+// Author: Soroosh Sanatkhani
+// Columbia University
+// Created: 1 August, 2023
+// Last Modified : 26 October, 2023
 
 #include "pch.h"
 #include "MainWindow.xaml.h"
@@ -9,7 +11,6 @@
 
 #include <winrt/Windows.UI.Core.h>
 #include <windows.applicationmodel.core.h>
-
 
 using namespace winrt;
 using namespace Microsoft::UI::Xaml;
@@ -34,6 +35,7 @@ namespace winrt::FUSapp::implementation
     MainWindow::MainWindow()
     {
         InitializeComponent();
+
         Title(L"Focused Ultrasound Setup"); // Set the title bar
         Frequency().Value(500000);
         Amplitudepp().Value(100);
@@ -42,20 +44,8 @@ namespace winrt::FUSapp::implementation
         PRF().Value(2);
     }
 
-    int32_t MainWindow::MyProperty()
-    {
-        throw hresult_not_implemented();
-    }
-
-    void MainWindow::MyProperty(int32_t /* value */)
-    {
-        throw hresult_not_implemented();
-    }
-
     void MainWindow::CheckDevice_Click(IInspectable const&, RoutedEventArgs const&)
     {
-        OutputDebugString(L"Hello, World!\n");
-        FUS::WaveformGenerator FuncGen;
         std::pair<std::wstring, int> devicestatus = FuncGen.GetDeviceStatus();
 
         // Create a ContentDialog
@@ -84,7 +74,16 @@ namespace winrt::FUSapp::implementation
     {
         // Round the value to an integer
         Frequency().Value(round(Frequency().Value()));
-        Amplitudepp().Value(round(Amplitudepp().Value()));
+
+        if (Amplitudepp().Value() > 150)
+        {
+            Amplitudepp().Value(150);
+        }
+        else
+        {
+            Amplitudepp().Value(round(Amplitudepp().Value()));
+        }
+        
         Lenght().Value(round(Lenght().Value()));
     }
     void MainWindow::PulseDuration_ValueChanged(IInspectable const&, NumberBoxValueChangedEventArgs const&)
@@ -163,62 +162,31 @@ namespace winrt::FUSapp::implementation
 
         if (allTextBoxesFilled)
         {
+            SonicationDuration = Lenght().Value();
+
+            TimeSpan delay = std::chrono::duration_cast<TimeSpan>(std::chrono::seconds(static_cast<int64_t>(Lenght().Value())));
+            
             FuncGenOutput = FuncGen.Burst_ON(
                 Frequency().Value(),
                 Amplitudepp().Value(),
                 PulseDuration().Value(),
-                DutyCycle().Value(),
-                Lenght().Value());
-            SonicationDuration = Lenght().Value();
-            TimeSpan delay = std::chrono::duration_cast<TimeSpan>(std::chrono::seconds(static_cast<int64_t>(Lenght().Value())));
+                DutyCycle().Value());
+            
             timer = ThreadPoolTimer::CreateTimer(
                 { get_weak(), &MainWindow::OnTick },
                 delay);
-
-            startTime = clock::now();
-            TimeSpan period = std::chrono::duration_cast<TimeSpan>(std::chrono::milliseconds(500));
-            periodicTimer = ThreadPoolTimer::CreatePeriodicTimer(
-                { get_weak(), &MainWindow::OnPeriodicTick },
-                period);
-
-            //SonicationProgress().IsActive(true);
-            //SonicationProgress().Value(20);
         }
     }
 
     void MainWindow::OnTick(ThreadPoolTimer const& timer)
     {
-        OutputDebugString(L"OnTick function is being called ........\n");
-        periodicTimer.Cancel();
+        timer.Cancel();
         FuncGen.Stop(FuncGenOutput.Manager, FuncGenOutput.VISAsession, FuncGenOutput.deviceStatus);
-        //SonicationProgress().IsActive(false);
-    }
-
-    void MainWindow::OnPeriodicTick(ThreadPoolTimer const& timer)
-    {
-        //co_await winrt::resume_background();
-        const std::chrono::duration<double> elapsed_seconds{ clock::now() - startTime };
-        double progress = (elapsed_seconds.count() / SonicationDuration) * 100;
-        progress = static_cast<double>(progress);
-        progress = static_cast<double>(std::round(progress));
-        
-        char message[150];
-        sprintf_s(message, "%s%f%s", "OnPeriodicTick function is being called ........", progress, "\n");
-        OutputDebugStringA(message);
-        //co_await winrt::resume_foreground(this->Dispatcher);
     }
 
     void MainWindow::Abort_Click(IInspectable const&, RoutedEventArgs const&)
     {
-        //co_await winrt::resume_foreground(this->Dispatcher());
-        if (timer)
-        {
-            timer.Cancel();
-            periodicTimer.Cancel();
-            //SonicationProgress().IsActive(false);
-            FuncGen.Stop(FuncGenOutput.Manager, FuncGenOutput.VISAsession, FuncGenOutput.deviceStatus);
-        }
-        SonicationProgress().IsActive(true);
-        SonicationProgress().Value(100);
+        timer.Cancel();
+        FuncGen.Stop(FuncGenOutput.Manager, FuncGenOutput.VISAsession, FuncGenOutput.deviceStatus);
     }
 }

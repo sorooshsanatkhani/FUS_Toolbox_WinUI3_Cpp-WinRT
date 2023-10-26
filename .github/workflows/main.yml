@@ -25,7 +25,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
@@ -91,6 +91,8 @@ jobs:
 ##### Permission for github token #############                            
     permissions:
       issues: write
+      contents:write
+      
 ##############################################
 
     steps:
@@ -145,7 +147,7 @@ jobs:
 
         uses:
 
-          actions/upload-release-asset@v1.0.2
+          actions/upload-release-asset@v1
 
         env:
 
@@ -181,7 +183,7 @@ jobs:
 
         uses:
 
-          actions/upload-release-asset@v1.0.2
+          actions/upload-release-asset@v1
 
         env:
 

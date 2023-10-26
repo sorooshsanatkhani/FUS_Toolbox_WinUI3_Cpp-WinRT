@@ -78,8 +78,8 @@ jobs:
         name: MSIX Package and Certificate Files
         run: mkdir -p ${{ github.workspace }}\\Packages
         path: |
-          ${{ github.workspace }}\\Packages\\FUSapp*\\*.msix'
-          ${{ github.workspace }}\\Packages\\FUSapp*\\*.cer'
+          ${{ github.workspace }}\\Packages\\*.msix
+          ${{ github.workspace }}\\Packages\\*.cer
 
   release:
     needs:

@@ -77,8 +77,8 @@ jobs:
       with:
         name: MSIX Package and Certificate Files
         path:
-          - '${{ github.workspace }}\\Packages\\*.msix'
-          - '${{ github.workspace }}\\Packages\\*.cer'
+          - '${{ github.workspace }}\\Packages\\FUSapp*\\*.msix'
+          - '${{ github.workspace }}\\Packages\\FUSapp*\\*.cer'
 
   release:
     needs:

@@ -89,10 +89,7 @@ jobs:
       windows-latest
 
 ##### Permission for github token #############                            
-    permissions:
-      issues: write
-      contents:write
-      
+    permissions: write-all     
 ##############################################
 
     steps:

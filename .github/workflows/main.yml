@@ -77,11 +77,11 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: MSIX Package and Certificate Files
-        path: Packages
+        path: D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.msix
 
     - name: Display structure of downloaded files
       run: ls -R
-      working-directory: Packages
+      working-directory: D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\
 ##################################
 
   release:

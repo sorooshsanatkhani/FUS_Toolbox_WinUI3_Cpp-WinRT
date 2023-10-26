@@ -77,11 +77,11 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: MSIX Package and Certificate Files
-        path: ${{ github.workspace }}\\Packages
+        path: Packages
 
     - name: Display structure of downloaded files
       run: ls -R
-      working-directory: ${{ github.workspace }}\\Packages
+      working-directory: Packages
 ##################################
 
   release:

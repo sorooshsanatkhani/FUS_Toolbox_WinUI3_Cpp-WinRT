@@ -72,14 +72,10 @@ jobs:
       run: Remove-Item -path GitHubActionsWorkflow.pfx
 
     # Upload only .msix and .cer files as artifacts.
-    - name: Upload MSIX package and certificate files
-      uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v3
       with:
         name: MSIX Package and Certificate Files
-        run: mkdir -p ${{ github.workspace }}\\Packages
-        path: |
-          ${{ github.workspace }}\\Packages\\*.msix
-          ${{ github.workspace }}\\Packages\\*.cer
+        path: ${{ github.workspace }}\\Packages
 
   release:
     needs:

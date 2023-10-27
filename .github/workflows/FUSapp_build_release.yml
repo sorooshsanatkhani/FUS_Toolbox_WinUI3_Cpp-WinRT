@@ -99,6 +99,7 @@ jobs:
           $content = Get-Content -Path "${{ github.workspace }}/Package.appxmanifest"
           $versionLine = $content | Select-String -Pattern 'Version='
           $version = $versionLine -replace '.*Version="([^"]*)".*', '$1'
+          $version = ($version -split "\.")[0..2] -join "."
           echo "version=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
         shell: pwsh
 

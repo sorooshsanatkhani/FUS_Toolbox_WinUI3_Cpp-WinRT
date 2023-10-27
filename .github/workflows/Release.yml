@@ -22,11 +22,16 @@ jobs:
 ##############################################
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
       - name: Download Artifacts
         uses: actions/download-artifact@v3
         with:
           name: MSIX Package and Certificate Files
-          path: './Release'
+          path: |
+           .\*_x64_Test\*_x64.msix
+           .\*_x64_Test\*_x64.cer
           
       - name:
           Create Release

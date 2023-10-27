@@ -27,7 +27,7 @@ jobs:
 
         with:
           name:
-            MSIX Package and Certificate Files
+            FUSapp build
 
       - name:
           Create Release
@@ -41,7 +41,7 @@ jobs:
         env:
           GITHUB_TOKEN:
 
-            ${{ secrets.GITHUB_TOKEN }}
+            ${{ secrets.FUSAPP_TOKEN }}
 
         with:
           tag_name:

@@ -194,6 +194,7 @@
     <None Include="packages.config" />
     <None Include="FUSapp_TemporaryKey.pfx" />
     <None Include=".gitignore" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="visa64.lib" />

@@ -150,7 +150,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "${{ github.workspace }}/Artifacts/*_x64.msix"
+          asset_path: "${{ github.workspace }}/Artifacts/*_x64_Test/*_x64.msix"
           asset_name: 'FUSapp.msix'
           asset_content_type: 'application/octet-stream'
 
@@ -161,6 +161,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "${{ github.workspace }}/Artifacts/*_x64.cer"
+          asset_path: "${{ github.workspace }}/Artifacts/*_x64_Test/*_x64.cer"
           asset_name: 'FUSapp_Certificate.cer'
           asset_content_type: 'application/x-x509-ca-cert'

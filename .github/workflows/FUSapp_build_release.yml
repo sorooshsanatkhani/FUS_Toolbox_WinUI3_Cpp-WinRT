@@ -93,7 +93,7 @@ jobs:
       - name: Extract version
         id: extract_version
         run: |
-          $content = Get-Content -Path FUS_Toolbox_WinUI3_Cpp-WinRT\Package.appxmanifest
+          $content = Get-Content -Path ..\Package.appxmanifest
           $versionLine = $content | Select-String -Pattern 'Version='
           $version = $versionLine -replace '.*Version="([^"]*)".*', '$1'
           echo "::set-output name=version::$version"

@@ -92,7 +92,7 @@ jobs:
     steps:
       - name: Extract branch name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
 
       - name: Create Release
@@ -113,7 +113,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: './MSIX Package and Certificate Files/*/*.msix'
+          asset_path: D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.msix
           asset_name: 'MSIX_Package.msix'
           asset_content_type: 'application/octet-stream'
 
@@ -124,6 +124,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: './MSIX Package and Certificate Files/*/*.cer'
+          asset_path: D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.cer
           asset_name: 'Certificate.cer'
           asset_content_type: 'application/x-x509-ca-cert'

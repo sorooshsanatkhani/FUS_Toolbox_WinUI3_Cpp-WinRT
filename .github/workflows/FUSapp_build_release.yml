@@ -93,19 +93,26 @@ jobs:
       - name: Extract version
         id: extract_version
         run: |
-          VERSION=$(grep 'Version=' Package.appxmanifest | sed 's/.*Version="\([^"]*\)".*/\1/')
-          echo "::set-output name=version::${VERSION}"
+          $content = Get-Content -Path Package.appxmanifest
+          $versionLine = $content | Select-String -Pattern 'Version='
+          $version = $versionLine -replace '.*Version="([^"]*)".*', '$1'
+          echo "::set-output name=version::$version"
+        shell: pwsh
 
       - name: Check if release exists
         id: check_release
         run: |
-          RELEASE_ID=$(curl --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/tags/${{ steps.extract_version.outputs.version }}" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" | jq '.id')
-          echo "::set-output name=id::${RELEASE_ID}"
+          $response = Invoke-RestMethod -Uri "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.extract_version.outputs.version }}" -Headers @{Authorization = "Bearer ${{ secrets.GITHUB_TOKEN }}"}
+          if ($response) {
+            echo "::set-output name=id::$($response.id)"
+          }
+        shell: pwsh
 
       - name: Delete existing release
         if: steps.check_release.outputs.id != ''
         run: |
-          curl --request DELETE "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/${{ steps.check_release.outputs.id }}" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}"
+          Invoke-RestMethod -Method Delete -Uri "https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.check_release.outputs.id }}" -Headers @{Authorization = "Bearer ${{ secrets.GITHUB_TOKEN }}"}
+        shell: pwsh
 
       - name: Create Release
         id: create_release

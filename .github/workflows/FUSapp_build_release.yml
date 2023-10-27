@@ -133,10 +133,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: List files in packages directory
-        run: |
-          Get-ChildItem -Path "${{ github.workspace }}/packages/*_x64_Test" -Recurse
-        shell: pwsh
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: MSIX Package and Certificate Files
+          path: "${{ github.workspace }}/Artifacts"
   
       - name: Upload Release Asset MSIX
         id:   upload-release-asset-msix
@@ -145,8 +146,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.msix
-          asset_name: 'MSIX_Package.msix'
+          asset_path: "${{ github.workspace }}/Artifacts/*_x64.msix"
+          asset_name: 'FUSapp.msix'
           asset_content_type: 'application/octet-stream'
 
       - name: Upload Release Asset Cer
@@ -156,6 +157,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.cer
-          asset_name: 'Certificate.cer'
+          asset_path: "${{ github.workspace }}/Artifacts/*_x64.cer"
+          asset_name: 'FUSapp_Certificate.cer'
           asset_content_type: 'application/x-x509-ca-cert'

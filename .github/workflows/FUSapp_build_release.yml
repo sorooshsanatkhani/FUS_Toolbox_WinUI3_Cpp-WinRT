@@ -93,9 +93,7 @@ jobs:
       - name: Extract version
         id: extract_version
         run: |
-          $content = Get-Content -Path ..\Package.appxmanifest
-          $versionLine = $content | Select-String -Pattern 'Version='
-          $version = $versionLine -replace '.*Version="([^"]*)".*', '$1'
+          $version = 1.0.1
           echo "::set-output name=version::$version"
         shell: pwsh
 

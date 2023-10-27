@@ -1,0 +1,133 @@
+name: FUSapp release
+
+on:
+  workflow_dispatch:  # This allows the workflow to be triggered manually
+  #push:
+  #  branches: [ master ]
+  #pull_request:
+  #  branches: [ master ]
+
+jobs:
+
+  release:
+
+    runs-on:
+      windows-latest
+
+##### Permission for github token #############                            
+    permissions: write-all     
+##############################################
+
+    steps:
+      - name:
+          Download Artifacts
+
+        uses:
+          actions/download-artifact@v3
+
+        with:
+          name:
+            MSIX Package and Certificate Files
+
+      - name:
+          Create Release
+
+        id:
+          create_release
+
+        uses:
+          actions/create-release@v1.1.4
+
+        env:
+          GITHUB_TOKEN:
+
+            ${{ secrets.GITHUB_TOKEN }}
+
+        with:
+          tag_name:
+
+            ${{ github.ref }}
+
+          release_name:
+
+            Release ${{ github.ref }}
+
+          draft:
+
+            false
+
+          prerelease:
+
+            false
+
+      - name:
+
+          Upload Release Asset
+
+        id:
+
+          upload-release-asset-msix
+
+        uses:
+
+          actions/upload-release-asset@v1
+
+        env:
+
+          GITHUB_TOKEN:
+
+            ${{ secrets.FUSAPP_TOKEN }}
+
+        with:
+
+          upload_url:
+
+            ${{ steps.create_release.outputs.upload_url }}
+
+          asset_path:
+
+            './MSIX Package and Certificate Files/*/*.msix'
+
+          asset_name:
+
+            'MSIX_Package.msix'
+
+          asset_content_type:
+
+            'application/octet-stream'
+
+      - name:
+
+          Upload Release Asset
+
+        id:
+
+          upload-release-asset-cer
+
+        uses:
+
+          actions/upload-release-asset@v1
+
+        env:
+
+          GITHUB_TOKEN:
+
+            ${{ secrets.FUSAPP_TOKEN }}
+
+        with:
+
+          upload_url:
+
+            ${{ steps.create_release.outputs.upload_url }}
+
+          asset_path:
+
+            './MSIX Package and Certificate Files/*/*.cer'
+
+          asset_name:
+
+            'Certificate.cer'
+
+          asset_content_type:
+
+            'application/x-x509-ca-cert'

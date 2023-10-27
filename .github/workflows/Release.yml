@@ -1,12 +1,13 @@
-name: FUSapp release
-
 on:
   workflow_dispatch:  # This allows the workflow to be triggered manually
   #push:
   #  branches: [ master ]
   #pull_request:
   #  branches: [ master ]
-
+  workflow_run:
+    workflows: FUSapp build
+    types:
+      - completed
 jobs:
 
   release:
@@ -19,16 +20,14 @@ jobs:
 ##############################################
 
     steps:
-      - name:
-          Download Artifacts
-
-        uses:
-          actions/download-artifact@v3
-
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
         with:
-          name:
-            FUSapp build
-
+          name: MSIX Package and Certificate Files
+          path: |
+            D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.msix
+            D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.cer
+          
       - name:
           Create Release
 

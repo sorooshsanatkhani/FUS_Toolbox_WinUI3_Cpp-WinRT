@@ -10,7 +10,7 @@
   <Identity
     Name="8eed369a-19fb-4c88-9d49-477fddda37e9"
     Publisher="CN=Soroosh Sanatkhani"
-    Version="1.0.1.0" />
+    Version="1.0.2.0" />
 
   <mp:PhoneIdentity PhoneProductId="8eed369a-19fb-4c88-9d49-477fddda37e9" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

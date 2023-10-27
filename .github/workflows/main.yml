@@ -150,7 +150,7 @@ jobs:
 
           GITHUB_TOKEN:
 
-            ${{ secrets.GITHUB_TOKEN }}
+            ${{ secrets.FUSAPP_TOKEN }}
 
         with:
 
@@ -186,7 +186,7 @@ jobs:
 
           GITHUB_TOKEN:
 
-            ${{ secrets.GITHUB_TOKEN }}
+            ${{ secrets.FUSAPP_TOKEN }}
 
         with:
 

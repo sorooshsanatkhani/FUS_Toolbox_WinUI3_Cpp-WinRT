@@ -7,7 +7,7 @@ on:
   #pull_request:
   #  branches: [ master ]
   workflow_run:
-    workflows: FUSapp build
+    workflows: ["FUSapp build"]
     types:
       - completed
 jobs:
@@ -26,9 +26,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: MSIX Package and Certificate Files
-          path: |
-            .\*_x64_Test\*_x64.msix
-            .\*_x64_Test\*_x64.cer
+          path: './Release'
           
       - name:
           Create Release

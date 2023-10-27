@@ -90,14 +90,6 @@ jobs:
 ##############################################
 
     steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: MSIX Package and Certificate Files
-          path: |
-            *_x64.msix
-            *_x64.cer
-
       - name: Create Release
         id:   create_release
         uses: actions/create-release@v1.1.4

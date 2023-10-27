@@ -1,5 +1,3 @@
-# This workflow will build, sign, and package a WinUI 3 MSIX desktop application
-
 name: FUSapp build and release
 
 on:
@@ -12,7 +10,7 @@ on:
 jobs:
 
   build:
-
+  
     strategy:
       matrix:
         configuration: [Release]
@@ -79,14 +77,13 @@ jobs:
         path: |
           D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.msix
           D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.cer
-##################################
+          
 ###############################################################
 ################### Release ###################################
 ###############################################################
   release:
-
-    runs-on:
-      windows-latest
+    needs: build
+    runs-on: windows-latest
 
 ##### Permission for github token #############                            
     permissions: write-all     

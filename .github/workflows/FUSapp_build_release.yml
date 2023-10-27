@@ -130,6 +130,14 @@ jobs:
           draft: false
           prerelease: false
 
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: List files in packages directory
+        run: |
+          Get-ChildItem -Path "${{ github.workspace }}/packages/*_x64_Test" -Recurse
+        shell: pwsh
+  
       - name: Upload Release Asset MSIX
         id:   upload-release-asset-msix
         uses: actions/upload-release-asset@v1

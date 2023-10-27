@@ -96,25 +96,25 @@ jobs:
       - name: Extract version
         id: extract_version
         run: |
-          $content = Get-Content -Path "${{ github.workspace }}\Package.appxmanifest"
+          $content = Get-Content -Path "${{ github.workspace }}/Package.appxmanifest"
           $versionLine = $content | Select-String -Pattern 'Version='
           $version = $versionLine -replace '.*Version="([^"]*)".*', '$1'
-          echo "::set-output name=version::$version"
+          echo "version=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
         shell: pwsh
 
       - name: Check if release exists
         id: check_release
         run: |
-          $response = Invoke-RestMethod -Uri "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.extract_version.outputs.version }}" -Headers @{Authorization = "Bearer ${{ secrets.GITHUB_TOKEN }}"}
+          $response = Invoke-RestMethod -Uri "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ env.version }}" -Headers @{Authorization = "Bearer ${{ secrets.GITHUB_TOKEN }}"}
           if ($response) {
-            echo "::set-output name=id::$($response.id)"
+            echo "id=$($response.id)" | Out-File -FilePath $env:GITHUB_ENV -Append
           }
         shell: pwsh
 
       - name: Delete existing release
-        if: steps.check_release.outputs.id != ''
+        if: env.id != ''
         run: |
-          Invoke-RestMethod -Method Delete -Uri "https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.check_release.outputs.id }}" -Headers @{Authorization = "Bearer ${{ secrets.GITHUB_TOKEN }}"}
+          Invoke-RestMethod -Method Delete -Uri "https://api.github.com/repos/${{ github.repository }}/releases/${{ env.id }}" -Headers @{Authorization = "Bearer ${{ secrets.GITHUB_TOKEN }}"}
         shell: pwsh
 
       - name: Create Release
@@ -123,8 +123,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.extract_version.outputs.version }}
-          release_name: Release ${{ steps.extract_version.outputs.version }}
+          tag_name: ${{ env.version }}
+          release_name: Release ${{ env.version }}
           draft: false
           prerelease: false
 

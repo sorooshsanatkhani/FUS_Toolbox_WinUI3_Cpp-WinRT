@@ -90,10 +90,15 @@ jobs:
 ##############################################
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
       - name: Extract version
         id: extract_version
         run: |
-          $version = 1.0.1.0
+          $content = Get-Content -Path "${{ github.workspace }}\Package.appxmanifest"
+          $versionLine = $content | Select-String -Pattern 'Version='
+          $version = $versionLine -replace '.*Version="([^"]*)".*', '$1'
           echo "::set-output name=version::$version"
         shell: pwsh
 

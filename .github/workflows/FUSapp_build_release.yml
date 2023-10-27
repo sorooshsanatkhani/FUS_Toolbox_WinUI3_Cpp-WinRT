@@ -95,8 +95,8 @@ jobs:
         with:
           name: MSIX Package and Certificate Files
           path: |
-            D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\*_x64_Test\*_x64.msix
-            D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\*_x64_Test\*_x64.cer
+            *_x64.msix
+            *_x64.cer
 
       - name: Create Release
         id:   create_release

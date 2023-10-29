@@ -153,7 +153,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "${{ github.workspace }}/Artifacts/FUSapp_${{ env.version }}.0_x64_Test/FUSapp_${{ env.version }}.0_x64.msix"
+          asset_path: "${{ github.workspace }}/Artifacts/FUSapp_${{ env.version }}.0_x64_Test/FUSapp_${{ env.version }}_x64.msix"
           asset_name: 'FUSapp.msix'
           asset_content_type: 'application/octet-stream'
 
@@ -164,6 +164,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "${{ github.workspace }}/Artifacts/FUSapp_${{ env.version }}.0_x64_Test/FUSapp_${{ env.version }}.0_x64.cer"
+          asset_path: "${{ github.workspace }}/Artifacts/FUSapp_${{ env.version }}.0_x64_Test/FUSapp_${{ env.version }}_x64.cer"
           asset_name: 'FUSapp_Certificate.cer'
           asset_content_type: 'application/x-x509-ca-cert'

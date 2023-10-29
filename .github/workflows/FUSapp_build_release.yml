@@ -69,7 +69,24 @@ jobs:
       run: Remove-Item -path GitHubActionsWorkflow.pfx
 
 ######### Artifact #############
-    # Upload only .msix and .cer files as artifacts.
+    - name: Extract version
+      id: extract_version
+      run: |
+        $content = Get-Content -Path "${{ github.workspace }}/Package.appxmanifest"
+        $xml = [xml]$content
+        $version = $xml.Package.Identity.Version
+        $version = ($version -split "\.")[0..2] -join "."
+        echo "version=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+        echo "The version number is: $version"
+      shell: pwsh
+
+    - name: Rename files
+      run: |
+        $version = Get-Content -Path $env:GITHUB_ENV | Select-String -Pattern 'version=' -replace '.*version=(.*)', '$1'
+        Get-ChildItem "${{ github.workspace }}/packages/*_x64_Test/*_x64.msix" | Rename-Item -NewName { $_.Name -replace '\d+\.\d+\.\d+\.\d+', $version }
+        Get-ChildItem "${{ github.workspace }}/packages/*_x64_Test/*_x64.cer" | Rename-Item -NewName { $_.Name -replace '\d+\.\d+\.\d+\.\d+', $version }
+      shell: pwsh
+
     - name: Download a Build Artifact
       uses: actions/upload-artifact@v3
       with:
@@ -92,17 +109,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
-      - name: Extract version
-        id: extract_version
-        run: |
-          $content = Get-Content -Path "${{ github.workspace }}/Package.appxmanifest"
-          $xml = [xml]$content
-          $version = $xml.Package.Identity.Version
-          $version = ($version -split "\.")[0..2] -join "."
-          echo "version=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
-          echo "The version number is: $version"
-        shell: pwsh
 
       - name: Check if release exists
         id: check_release

@@ -99,10 +99,10 @@ jobs:
           $content = Get-Content -Path "${{ github.workspace }}/Package.appxmanifest"
           $xml = [xml]$content
           $version = $xml.Package.Identity.Version
+          $version = ($version -split "\.")[0..2] -join "."
           echo "version=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
           echo "The version number is: $version"
         shell: pwsh
-
 
       - name: Check if release exists
         id: check_release

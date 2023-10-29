@@ -82,7 +82,7 @@ jobs:
 
     - name: Rename files
       run: |
-        $version = Get-Content -Path $env:GITHUB_ENV | Select-String -Pattern 'version=' -replace '.*version=(.*)', '$1'
+        $version = Get-Content -Path $env:GITHUB_ENV | Select-String -Pattern 'version=' | ForEach-Object { $_ -replace '.*version=(.*)', '$1' }
         Get-ChildItem "${{ github.workspace }}/packages/*_x64_Test/*_x64.msix" | Rename-Item -NewName { $_.Name -replace '\d+\.\d+\.\d+\.\d+', $version }
         Get-ChildItem "${{ github.workspace }}/packages/*_x64_Test/*_x64.cer" | Rename-Item -NewName { $_.Name -replace '\d+\.\d+\.\d+\.\d+', $version }
       shell: pwsh

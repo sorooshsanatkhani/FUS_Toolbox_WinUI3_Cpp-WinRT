@@ -69,36 +69,13 @@ jobs:
       run: Remove-Item -path GitHubActionsWorkflow.pfx
 
 ######### Artifact #############
-    - name: Extract version
-      id: extract_version
-      run: |
-        $content = Get-Content -Path "${{ github.workspace }}/Package.appxmanifest"
-        $xml = [xml]$content
-        $version = $xml.Package.Identity.Version
-        $version = ($version -split "\.")[0..2] -join "."
-        echo "version=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
-        echo "The version number is: $version"
-      shell: pwsh
-
-    - name: Rename files
-      run: |
-        $version = Get-Content -Path $env:GITHUB_ENV | Select-String -Pattern 'version=' | ForEach-Object { $_ -replace '.*version=(.*)', '$1' }
-        Get-ChildItem "${{ github.workspace }}/packages/*_x64_Test/*_x64.msix" | Rename-Item -NewName { $_.Name -replace '\d+\.\d+\.\d+\.\d+', $version }
-        Get-ChildItem "${{ github.workspace }}/packages/*_x64_Test/*_x64.cer" | Rename-Item -NewName { $_.Name -replace '\d+\.\d+\.\d+\.\d+', $version }
-      shell: pwsh
-
     - name: Download a Build Artifact
       uses: actions/upload-artifact@v3
       with:
         name: MSIX Package and Certificate Files
         path: |
           D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.msix
-          D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.cer
-
-    - name: List files in Artifacts directory
-      run: |
-        Get-ChildItem -Path "${{ github.workspace }}/packages" -Recurse    
-      shell: pwsh
+          D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.ce
 ###############################################################
 ################### Release ###################################
 ###############################################################
@@ -120,7 +97,6 @@ jobs:
           $content = Get-Content -Path "${{ github.workspace }}/Package.appxmanifest"
           $xml = [xml]$content
           $version = $xml.Package.Identity.Version
-          $version = ($version -split "\.")[0..2] -join "."
           echo "version=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
           echo "The version number is: $version"
         shell: pwsh
@@ -174,7 +150,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "${{ github.workspace }}/Artifacts/FUSapp_${{ env.version }}.0_x64_Test/FUSapp_${{ env.version }}_x64.msix"
+          asset_path: "${{ github.workspace }}/Artifacts/FUSapp_${{ env.version }}_x64_Test/FUSapp_${{ env.version }}_x64.msix"
           asset_name: 'FUSapp.msix'
           asset_content_type: 'application/octet-stream'
 
@@ -185,6 +161,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "${{ github.workspace }}/Artifacts/FUSapp_${{ env.version }}.0_x64_Test/FUSapp_${{ env.version }}_x64.cer"
+          asset_path: "${{ github.workspace }}/Artifacts/FUSapp_${{ env.version }}_x64_Test/FUSapp_${{ env.version }}_x64.cer"
           asset_name: 'FUSapp_Certificate.cer'
           asset_content_type: 'application/x-x509-ca-cert'

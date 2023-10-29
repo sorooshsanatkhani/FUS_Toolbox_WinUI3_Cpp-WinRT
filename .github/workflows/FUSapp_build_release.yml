@@ -97,7 +97,7 @@ jobs:
         id: extract_version
         run: |
           $content = Get-Content -Path "${{ github.workspace }}/Package.appxmanifest"
-          $versionLine = $content | Select-String -Pattern 'Version="\d+\.\d+\.\d+\.\d+"'
+          $versionLine = $content | Select-String -Pattern '<Identity.*Version="\d+\.\d+\.\d+\.\d+"'
           $version = $versionLine -replace '.*Version="([^"]*)".*', '$1'
           echo "version=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
           echo "The version number is: $version"

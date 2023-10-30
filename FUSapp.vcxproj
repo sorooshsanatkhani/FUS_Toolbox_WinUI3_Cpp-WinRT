@@ -218,6 +218,7 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".github\workflows\FUSapp_build_release.yml" />
     <None Include=".gitignore" />
     <None Include="FUSapp_TemporaryKey.pfx" />
     <None Include="packages.config" />

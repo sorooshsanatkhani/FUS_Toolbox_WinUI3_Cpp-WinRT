@@ -195,8 +195,12 @@
     <None Include="FUSapp_TemporaryKey.pfx" />
     <None Include=".gitignore" />
     <None Include="README.md" />
+    <None Include=".github\workflows\FUSapp_build_release.yml" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="visa64.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="$(MSBuildThisFileDirectory)..\..\natvis\wil.natvis" />
   </ItemGroup>
 </Project>

@@ -75,7 +75,7 @@ jobs:
         name: MSIX Package and Certificate Files
         path: |
           D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.msix
-          D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.ce
+          D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.cer
 
     - name: List files in Artifacts directory
       run: |

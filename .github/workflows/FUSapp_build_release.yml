@@ -76,6 +76,11 @@ jobs:
         path: |
           D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.msix
           D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.ce
+
+    - name: List files in Artifacts directory
+      run: |
+         Get-ChildItem -Path "${{ github.workspace }}/packages/*_x64_Test" -Recurse    
+      shell: pwsh
 ###############################################################
 ################### Release ###################################
 ###############################################################
